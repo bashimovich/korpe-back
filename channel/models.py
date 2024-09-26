@@ -23,7 +23,7 @@ class Channel(models.Model):
                 output_size = (300, 300)
                 img.thumbnail(output_size)  
                 img_io = BytesIO()
-                img.save(img_io, format='jpg') 
+                img.save(img_io, format='JPEG') 
                 self.image.save(self.image.name, ContentFile(img_io.getvalue()), save=False)
         
         super().save(*args, **kwargs)
@@ -48,7 +48,7 @@ class Category(models.Model):
                 output_size = (300, 300)
                 img.thumbnail(output_size)  
                 img_io = BytesIO()
-                img.save(img_io, format='jpg') 
+                img.save(img_io, format='JPEG') 
                 self.image.save(self.image.name, ContentFile(img_io.getvalue()), save=False)
         
         super().save(*args, **kwargs)
@@ -74,7 +74,7 @@ class Lesson(models.Model):
                 output_size = (600, 600)
                 img.thumbnail(output_size)  
                 img_io = BytesIO()
-                img.save(img_io, format='jpg') 
+                img.save(img_io, format='JPEG') 
                 self.image.save(self.image.name, ContentFile(img_io.getvalue()), save=False)
         
         super().save(*args, **kwargs)
