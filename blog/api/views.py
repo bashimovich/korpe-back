@@ -14,22 +14,26 @@ def get_client_ip(request):
     return ip
 
 class BlogListView(generics.ListAPIView):
-    queryset = Blog.objects.all()
+    queryset = Blog.objects.filter(is_active=True)
     serializer_class = BlogSerializer
     filter_backends = (filters.SearchFilter,)
     search_fields = ('title_tm', 'title_en', 'title_ru')
 
+class BlogListThreeView(generics.ListAPIView):
+    queryset = Blog.objects.filter(is_active=True).order_by('-id')[:3]
+    serializer_class = BlogSerializer
+
 class BlogDetailView(generics.RetrieveAPIView):
-    queryset = Blog.objects.all()
+    queryset = Blog.objects.filter(is_active=True)
     serializer_class = BlogSerializer
     def retrieve(self, request, *args, **kwargs):
         instance = self.get_object()
         ip_address = get_client_ip(request)
         
-        if not BlogView.objects.filter(video=instance, ip_address=ip_address).exists():
+        if not BlogView.objects.filter(blog=instance, ip_address=ip_address).exists():
             instance.views += 1
             instance.save()
-            BlogView.objects.create(video=instance, ip_address=ip_address)
+            BlogView.objects.create(blog=instance, ip_address=ip_address)
 
         serializer = self.get_serializer(instance)
         response_data = serializer.data
