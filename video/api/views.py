@@ -20,19 +20,6 @@ class VideoListView(generics.ListAPIView):
     filter_backends = (filters.SearchFilter,)
     search_fields = ('title_tm', 'title_en', 'title_ru')
 
-# class VideoDetailView(generics.RetrieveAPIView):
-#     queryset = Video.objects.all()
-#     serializer_class = VideoSerializer
-#     def retrieve(self, request, *args, **kwargs):
-#         instance = self.get_object()
-#         ip_address = get_client_ip(request)
-#         if not VideoView.objects.filter(video=instance, ip_address=ip_address).exists():
-#             instance.views += 1
-#             instance.save()
-#             VideoView.objects.create(video=instance, ip_address=ip_address)
-#         serializer = self.get_serializer(instance)
-#         return Response(serializer.data)
-
 class VideoDetailView(generics.RetrieveAPIView):
     queryset = Video.objects.all()
     serializer_class = VideoSerializer

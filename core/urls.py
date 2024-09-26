@@ -28,6 +28,9 @@ urlpatterns = [
     path('api/v1/books/', include('book.api.urls')), 
     path('api/v1/audios/', include('audio.api.urls')), 
     path('api/v1/blogs/', include('blog.api.urls')), 
+    path('api/v1/parents/', include('parents.api.urls')), 
+    path('api/v1/teachers/', include('teachers.api.urls')), 
+    # path('api/v1/teachers/', include('teachers.api.urls')), 
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

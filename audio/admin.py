@@ -4,6 +4,7 @@ from .models import Audio
 from django.conf import settings
 from django.utils.html import format_html
 
+admin.site.site_header = "Korpe Admin"
 
 class MusicAdminForm(forms.ModelForm):
     class Meta:

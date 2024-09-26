@@ -40,6 +40,8 @@ CORS_ALLOW_METHODS = (
 # Application definition
 
 INSTALLED_APPS = [
+    "admin_interface",
+    "colorfield",
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -57,6 +59,8 @@ INSTALLED_APPS = [
     'blog',
     'parents',
     'teachers',
+    'ui',
+
 ]
 
 MIDDLEWARE = [

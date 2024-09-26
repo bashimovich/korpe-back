@@ -15,7 +15,7 @@ def get_client_ip(request):
 
 class BlogforParentsListView(generics.ListAPIView):
     queryset = BlogforParents.objects.filter(is_active=True)
-    serializer_class = BlogforParents
+    serializer_class = BlogforParentsSerializer
     filter_backends = (filters.SearchFilter,)
     search_fields = ('title_tm', 'title_en', 'title_ru')
 
