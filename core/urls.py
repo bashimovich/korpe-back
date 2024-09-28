@@ -30,6 +30,7 @@ urlpatterns = [
     path('api/v1/blogs/', include('blog.api.urls')), 
     path('api/v1/parents/', include('parents.api.urls')), 
     path('api/v1/teachers/', include('teachers.api.urls')), 
+    path('api/v1/ui/', include('ui.api.urls')), 
     # path('api/v1/teachers/', include('teachers.api.urls')), 
 ]
 if settings.DEBUG:

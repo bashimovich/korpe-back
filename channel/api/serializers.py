@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from channel.models import Channel, Category, Lesson, Banner
+from channel.models import Channel, Category, Lesson, Banner, About
 
 class ChannelSerializer(serializers.ModelSerializer):
     class Meta:
@@ -28,3 +28,8 @@ class BannerSerializer(serializers.ModelSerializer):
         fields = [
             'name', 'url', 'image'
         ]
+
+class AboutSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = About
+        fields = '__all__' 

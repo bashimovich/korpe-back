@@ -3,6 +3,7 @@ from django.contrib.auth.models import Group
 from PIL import Image
 from io import BytesIO
 from django.core.files.base import ContentFile
+from ckeditor.fields import RichTextField
 
 class Channel(models.Model):
     username = models.CharField(max_length=255, null=False, unique=True)
@@ -90,3 +91,37 @@ class Banner(models.Model):
 
     def __str__(self):
         return self.name
+
+class TeacherPageBanner(models.Model):
+    name = models.CharField(max_length=255, null=False, unique=True)
+    url = models.CharField(max_length=255, null=False)
+    image = models.ImageField(upload_to='images/banners/')
+    is_active = models.BooleanField(default=False)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return self.name
+
+class ParentsPageBanner(models.Model):
+    name = models.CharField(max_length=255, null=False, unique=True)
+    url = models.CharField(max_length=255, null=False)
+    image = models.ImageField(upload_to='images/banners/')
+    is_active = models.BooleanField(default=False)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return self.name
+class About(models.Model):
+    content_tm = RichTextField(null=True)
+    content_en = RichTextField(null=True)
+    content_ru = RichTextField(null=True)
+    image = models.ImageField(upload_to='images/about/')
+
+    is_active = models.BooleanField(default=False)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return self.content_tm[:15]

@@ -16,10 +16,6 @@ def validate_img_file_extension(value):
 
 class HomeDailyBlog(models.Model):
     unique_key = models.UUIDField(default=uuid.uuid4, editable=False, unique=True)
-    author = models.CharField(max_length=255, null=False)
-    title_tm = models.CharField(max_length=255, null=False)
-    title_en = models.CharField(max_length=255, null=False)
-    title_ru = models.CharField(max_length=255, null=False)
     content_tm = RichTextField(null=True)
     content_en = RichTextField(null=True)
     content_ru = RichTextField(null=True)
@@ -30,7 +26,7 @@ class HomeDailyBlog(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return self.title_tm
+        return self.content_tm[:15]
 
     def save(self, *args, **kwargs):
         if self.thumbnail:
