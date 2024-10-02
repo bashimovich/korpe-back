@@ -32,6 +32,8 @@ class Book(models.Model):
     def save(self, *args, **kwargs):
         if self.image:
             img = Image.open(self.image)
+            if img.mode == 'RGBA':
+                img = img.convert('RGB')
             if img.height > 600 or img.width > 300: 
                 output_size = (300, 600)
                 img.thumbnail(output_size)  

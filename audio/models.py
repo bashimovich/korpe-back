@@ -56,6 +56,8 @@ class Audio(models.Model):
     def save(self, *args, **kwargs):
         if self.thumbnail:
             img = Image.open(self.thumbnail)
+            if img.mode == 'RGBA':
+                img = img.convert('RGB')
             if img.height > 300 or img.width > 600: 
                 output_size = (600, 300)
                 img.thumbnail(output_size)  

@@ -20,6 +20,8 @@ class Channel(models.Model):
     def save(self, *args, **kwargs):
         if self.image:
             img = Image.open(self.image)
+            if img.mode == 'RGBA':
+                img = img.convert('RGB')
             if img.height > 300 or img.width > 300: 
                 output_size = (300, 300)
                 img.thumbnail(output_size)  
@@ -45,6 +47,8 @@ class Category(models.Model):
     def save(self, *args, **kwargs):
         if self.image:
             img = Image.open(self.image)
+            if img.mode == 'RGBA':
+                img = img.convert('RGB')
             if img.height > 300 or img.width > 300: 
                 output_size = (300, 300)
                 img.thumbnail(output_size)  
@@ -71,6 +75,8 @@ class Lesson(models.Model):
     def save(self, *args, **kwargs):
         if self.image:
             img = Image.open(self.image)
+            if img.mode == 'RGBA':
+                img = img.convert('RGB')
             if img.height > 600 or img.width > 600: 
                 output_size = (600, 600)
                 img.thumbnail(output_size)  

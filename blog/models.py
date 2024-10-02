@@ -39,6 +39,8 @@ class Blog(models.Model):
     def save(self, *args, **kwargs):
         if self.thumbnail:
             img = Image.open(self.thumbnail)
+            if img.mode == 'RGBA':
+                img = img.convert('RGB')
             if img.height > 400 or img.width > 500: 
                 output_size = (400, 600)
                 img.thumbnail(output_size)  

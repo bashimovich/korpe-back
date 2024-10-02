@@ -31,6 +31,8 @@ class HomeDailyBlog(models.Model):
     def save(self, *args, **kwargs):
         if self.thumbnail:
             img = Image.open(self.thumbnail)
+            if img.mode == 'RGBA':
+                img = img.convert('RGB')
             if img.height > 600 or img.width > 600: 
                 output_size = (600, 600)
                 img.thumbnail(output_size)  
