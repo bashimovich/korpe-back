@@ -36,7 +36,7 @@ class Book(models.Model):
                 output_size = (300, 600)
                 img.thumbnail(output_size)  
                 img_io = BytesIO()
-                img.save(img_io, format='jpg') 
+                img.save(img_io, format='jpeg') 
                 self.image.save(self.image.name, ContentFile(img_io.getvalue()), save=False)
         if self.ebook_file:
             file_size_bytes = self.ebook_file.size
