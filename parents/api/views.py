@@ -4,6 +4,8 @@ from parents.models import BlogforParents, BlogforParentsView
 from .serializers import BlogforParentsSerializer
 from rest_framework import filters
 from django.db.models import Q
+from django_filters.rest_framework import DjangoFilterBackend
+from core.filters import ParentsFilter
 
 def get_client_ip(request):
     x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
@@ -14,10 +16,11 @@ def get_client_ip(request):
     return ip
 
 class BlogforParentsListView(generics.ListAPIView):
-    queryset = BlogforParents.objects.filter(is_active=True)
+    queryset = BlogforParents.objects.filter(is_active = True, is_publish = True)
     serializer_class = BlogforParentsSerializer
-    filter_backends = (filters.SearchFilter,)
+    filter_backends = (DjangoFilterBackend, filters.SearchFilter,)
     search_fields = ('title_tm', 'title_en', 'title_ru')
+    filterset_class = ParentsFilter
 
 class BlogforParentsDetailView(generics.RetrieveAPIView):
     queryset = BlogforParents.objects.filter(is_active=True)

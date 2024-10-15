@@ -4,6 +4,8 @@ from teachers.models import BlogforTeachers, BlogforTeachersView
 from .serializers import BlogforTeachersSerializer
 from rest_framework import filters
 from django.db.models import Q
+from django_filters.rest_framework import DjangoFilterBackend
+from core.filters import TeachersFilter
 
 def get_client_ip(request):
     x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
@@ -14,13 +16,14 @@ def get_client_ip(request):
     return ip
 
 class BlogforTeachersListView(generics.ListAPIView):
-    queryset = BlogforTeachers.objects.filter(is_active=True)
+    queryset = BlogforTeachers.objects.filter(is_active = True, is_publish = True)
     serializer_class = BlogforTeachersSerializer
-    filter_backends = (filters.SearchFilter,)
+    filter_backends = (DjangoFilterBackend, filters.SearchFilter,)
     search_fields = ('title_tm', 'title_en', 'title_ru')
+    filterset_class = TeachersFilter
 
 class BlogforTeachersDetailView(generics.RetrieveAPIView):
-    queryset = BlogforTeachers.objects.filter(is_active=True)
+    queryset = BlogforTeachers.objects.filter(is_active=True, is_publish = True)
     serializer_class = BlogforTeachersSerializer
     def retrieve(self, request, *args, **kwargs):
         instance = self.get_object()

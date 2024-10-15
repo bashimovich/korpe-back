@@ -4,6 +4,8 @@ from blog.models import Blog, BlogView
 from .serializers import BlogSerializer
 from rest_framework import filters
 from django.db.models import Q
+from django_filters.rest_framework import DjangoFilterBackend
+from core.filters import BlogFilter
 
 def get_client_ip(request):
     x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
@@ -14,10 +16,11 @@ def get_client_ip(request):
     return ip
 
 class BlogListView(generics.ListAPIView):
-    queryset = Blog.objects.filter(is_active=True)
+    queryset = Blog.objects.filter(is_active=True, is_publish=True)
     serializer_class = BlogSerializer
-    filter_backends = (filters.SearchFilter,)
+    filter_backends = (DjangoFilterBackend, filters.SearchFilter,)
     search_fields = ('title_tm', 'title_en', 'title_ru')
+    filterset_class = BlogFilter
 
 class BlogListThreeView(generics.ListAPIView):
     queryset = Blog.objects.filter(is_active=True).order_by('-id')[:3]
@@ -38,3 +41,7 @@ class BlogDetailView(generics.RetrieveAPIView):
         serializer = self.get_serializer(instance)
         response_data = serializer.data
         return Response(response_data)
+
+class TopBlogListView(generics.ListAPIView):
+    queryset = Blog.objects.filter(is_active=True, is_publish=True).order_by('views')[:8]
+    serializer_class = BlogSerializer

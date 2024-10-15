@@ -24,6 +24,7 @@ from django.conf.urls.static import static
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/v1/videos/', include('video.api.urls')), 
+    path('api/v1/category/', include('channel.api.urls')), 
     path('api/v1/banners/', include('channel.api.urls')), 
     path('api/v1/books/', include('book.api.urls')), 
     path('api/v1/audios/', include('audio.api.urls')), 

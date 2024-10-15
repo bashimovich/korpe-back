@@ -4,7 +4,7 @@ from PIL import Image
 from io import BytesIO
 from django.core.files.base import ContentFile
 from ckeditor.fields import RichTextField
-from channel.models import Channel, Category, Lesson
+from channel.models import Channel, CategoryKids, Lesson
 # Create your models here.
 
 
@@ -13,7 +13,7 @@ class Book(models.Model):
     name = models.CharField(max_length=255, null=False)
     author = models.CharField(max_length=255, null=False)
     channel = models.ForeignKey(Channel, on_delete=models.CASCADE, null=False, blank=True, related_name='book_channel')
-    category = models.ForeignKey(Category, on_delete=models.CASCADE, null=False, blank=True, related_name='book_category')
+    category = models.ForeignKey(CategoryKids, on_delete=models.CASCADE, null=False, blank=True, related_name='book_category')
     lesson = models.ForeignKey(Lesson, on_delete=models.CASCADE, null=False, blank=True, related_name='book_lesson')
     description_tm = RichTextField(null=True)
     description_en = RichTextField(null=True)
@@ -36,7 +36,7 @@ class Book(models.Model):
                 output_size = (300, 600)
                 img.thumbnail(output_size)  
                 img_io = BytesIO()
-                img.save(img_io, format='jpg') 
+                img.save(img_io, format='jpeg') 
                 self.image.save(self.image.name, ContentFile(img_io.getvalue()), save=False)
         if self.ebook_file:
             file_size_bytes = self.ebook_file.size

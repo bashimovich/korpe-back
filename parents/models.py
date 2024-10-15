@@ -1,7 +1,7 @@
 import uuid
 import os
 from django.db import models
-from channel.models import Channel, Category, Lesson
+from channel.models import Channel, CategoryParents, Lesson
 from ckeditor.fields import RichTextField
 from django.core.exceptions import ValidationError
 from PIL import Image
@@ -17,7 +17,7 @@ def validate_img_file_extension(value):
 class BlogforParents(models.Model):
     unique_key = models.UUIDField(default=uuid.uuid4, editable=False, unique=True)
     channel = models.ForeignKey(Channel, on_delete=models.CASCADE, null=False, blank=True, related_name='blogforparents_channel')
-    category = models.ForeignKey(Category, on_delete=models.CASCADE, null=False, blank=True, related_name='blogforparents_category')
+    category = models.ForeignKey(CategoryParents, on_delete=models.CASCADE, null=False, blank=True, related_name='blogforparents_category')
     lesson = models.ForeignKey(Lesson, on_delete=models.CASCADE, null=False, blank=True, related_name='blogforparents_lesson')
     author = models.CharField(max_length=255, null=False)
     title_tm = models.CharField(max_length=255, null=False)

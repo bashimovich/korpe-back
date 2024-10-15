@@ -1,10 +1,10 @@
 from rest_framework import serializers
 from video.models import Video
-from channel.api.serializers import ChannelSerializer, CategorySerializer, LessonSerializer
+from channel.api.serializers import ChannelSerializer, CategoryKidsSerializer, LessonSerializer
 
 class VideoSerializer(serializers.ModelSerializer):
     channel = ChannelSerializer()
-    category = CategorySerializer()
+    category = CategoryKidsSerializer()
     lesson = LessonSerializer()
     related_videos = serializers.SerializerMethodField()
 
@@ -24,7 +24,7 @@ class VideoSerializer(serializers.ModelSerializer):
 
 class RelatedVideoSerializer(serializers.ModelSerializer):
     channel = ChannelSerializer()
-    category = CategorySerializer()
+    category = CategoryKidsSerializer()
     lesson = LessonSerializer()
     class Meta:
         model = Video

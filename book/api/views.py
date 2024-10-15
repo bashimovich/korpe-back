@@ -5,6 +5,8 @@ from book.models import Book, BookView
 from .serializers import BookSerializer
 from rest_framework import filters
 from django.db.models import Q
+from django_filters.rest_framework import DjangoFilterBackend
+from core.filters import BookFilter
 
 def get_client_ip(request):
     x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
@@ -15,16 +17,12 @@ def get_client_ip(request):
     return ip
 
 class BookListView(generics.ListAPIView):
-    queryset = Book.objects.all()
+    queryset = Book.objects.filter(is_active = True)
     serializer_class = BookSerializer
-    filter_backends = (filters.SearchFilter,)
+    filter_backends = (DjangoFilterBackend, filters.SearchFilter,)
     search_fields = ('name', 'author')
+    filterset_class = BookFilter
 
-class BookListView(generics.ListAPIView):
-    queryset = Book.objects.all()
-    serializer_class = BookSerializer
-    filter_backends = (filters.SearchFilter,)
-    search_fields = ('name', 'author')
 
 class BookDetailView(generics.RetrieveAPIView):
     queryset = Book.objects.all()

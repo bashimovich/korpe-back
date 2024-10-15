@@ -4,6 +4,8 @@ from audio.models import Audio, AudioView
 from .serializers import AudioSerializer
 from rest_framework import filters
 from django.db.models import Q
+from django_filters.rest_framework import DjangoFilterBackend
+from core.filters import AudioFilter
 
 def get_client_ip(request):
     x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
@@ -14,20 +16,14 @@ def get_client_ip(request):
     return ip
 
 class AudioListView(generics.ListAPIView):
-    # queryset = Audio.objects.filter(type_audio=type_audio)
+    queryset = Audio.objects.filter(is_active = True, is_publish = True)
     serializer_class = AudioSerializer
-    filter_backends = (filters.SearchFilter,)
+    filter_backends = (DjangoFilterBackend, filters.SearchFilter,)
     search_fields = ('title_tm', 'title_en', 'title_ru')
-    def get_queryset(self):
-        type_audio = self.kwargs.get('type_audio')
-        
-        if type_audio == 'active':
-            return Audio.objects.filter(is_active=True)
-        else:
-            return Audio.objects.all()
+    filterset_class = AudioFilter
 
 class AudioDetailView(generics.RetrieveAPIView):
-    queryset = Audio.objects.all()
+    queryset = Audio.objects.filter(is_active = True, is_publish = True)
     serializer_class = AudioSerializer
     def retrieve(self, request, *args, **kwargs):
         instance = self.get_object()

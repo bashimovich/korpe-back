@@ -1,7 +1,7 @@
 import uuid
 import os
 from django.db import models
-from channel.models import Channel, Category, Lesson
+from channel.models import Channel, CategoryKids, Lesson
 from ckeditor.fields import RichTextField
 from django.core.exceptions import ValidationError
 from PIL import Image
@@ -20,21 +20,25 @@ def validate_img_file_extension(value):
     if not ext.lower() in valid_extensions:
         raise ValidationError('Unsupported file extension.')
 TYPE_CHOICES = [
+    ('erteki', 'Erteki'),
+    ('gosgy', 'Gosgy'),
+    ('aydym', 'Aydym'),
+    ('halk', 'Halk Doredijiligi')
+]
+LANG_CHOICES = [
     ('english', 'English'),
     ('turkmen', 'Turkmen'),
-    ('russian', 'Russian'),
-    ('traditional', 'Traditional'),
-    ('tale', 'Tales'),
-    ('huwdi', 'Huwdi'),
+    ('russian', 'Russian')
 ]
     
 
 class Audio(models.Model):
     unique_key = models.UUIDField(default=uuid.uuid4, editable=False, unique=True)
     channel = models.ForeignKey(Channel, on_delete=models.CASCADE, null=False, blank=True, related_name='audio_channel')
-    category = models.ForeignKey(Category, on_delete=models.CASCADE, null=False, blank=True, related_name='audio_category')
+    category = models.ForeignKey(CategoryKids, on_delete=models.CASCADE, null=False, blank=True, related_name='audio_category')
     lesson = models.ForeignKey(Lesson, on_delete=models.CASCADE, null=False, blank=True, related_name='audio_lesson')
-    type_audio= models.CharField(max_length=100, choices=TYPE_CHOICES, default='turkmen')
+    type_audio= models.CharField(max_length=100, choices=TYPE_CHOICES, default='aydym')
+    lang_audio= models.CharField(max_length=100, choices=LANG_CHOICES, default='turkmen')
 
 
     title_tm = models.CharField(max_length=255, null=False)

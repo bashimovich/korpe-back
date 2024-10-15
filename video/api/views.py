@@ -5,6 +5,8 @@ from .serializers import VideoSerializer, RelatedVideoSerializer
 from rest_framework import filters
 from django.db.models import Q
 import random
+from django_filters.rest_framework import DjangoFilterBackend
+from core.filters import VideoFilter
 
 def get_client_ip(request):
     x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
@@ -15,10 +17,11 @@ def get_client_ip(request):
     return ip
 
 class VideoListView(generics.ListAPIView):
-    queryset = Video.objects.all()
+    queryset = Video.objects.filter(is_active = True, is_publish = True)
     serializer_class = VideoSerializer
-    filter_backends = (filters.SearchFilter,)
+    filter_backends = (DjangoFilterBackend, filters.SearchFilter,)
     search_fields = ('title_tm', 'title_en', 'title_ru')
+    filterset_class = VideoFilter
 
 class VideoDetailView(generics.RetrieveAPIView):
     queryset = Video.objects.all()

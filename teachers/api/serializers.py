@@ -1,10 +1,10 @@
 from rest_framework import serializers
 from teachers.models import BlogforTeachers 
-from channel.api.serializers import ChannelSerializer, CategorySerializer, LessonSerializer
+from channel.api.serializers import ChannelSerializer, CategoryTeachersSerializer, LessonSerializer
 
 class BlogforTeachersSerializer(serializers.ModelSerializer):
     channel = ChannelSerializer()
-    category = CategorySerializer()
+    category = CategoryTeachersSerializer()
     lesson = LessonSerializer()
 
     class Meta:

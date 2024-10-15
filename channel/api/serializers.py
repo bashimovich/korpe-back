@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from channel.models import Channel, Category, Lesson, Banner, About
+from channel.models import Channel, Lesson, Banner, About, CategoryKids, CategoryParents, CategoryTeachers
 
 class ChannelSerializer(serializers.ModelSerializer):
     class Meta:
@@ -8,9 +8,21 @@ class ChannelSerializer(serializers.ModelSerializer):
             'id', 'username', 'image', 'role',
         ]
 
-class CategorySerializer(serializers.ModelSerializer):
+class CategoryKidsSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Category
+        model = CategoryKids
+        fields = [
+            'id', 'name_tm', 'name_en', 'name_ru', 'image',
+        ]
+class CategoryParentsSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = CategoryParents
+        fields = [
+            'id', 'name_tm', 'name_en', 'name_ru', 'image',
+        ]
+class CategoryTeachersSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = CategoryTeachers
         fields = [
             'id', 'name_tm', 'name_en', 'name_ru', 'image',
         ]
